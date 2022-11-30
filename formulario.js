@@ -11,16 +11,18 @@ form.append(parrafo);
 const labeluser = document.getElementById("labeluser");
 const passContainer = document.querySelector(".form-floating3");
 
+let errores = [];
+
 usuario.addEventListener("input", () => {
   let dataUser = usuario.value;
   let expRegUser = /[A-Za-z\d$@$!%*?&]{4,15}/;
   let userOk = expRegUser.test(dataUser);
-
-  console.log(dataUser);
   if (userOk) {
     usuario.style.background = "#0616";
+    errores[0] = "";
   } else {
     usuario.style.background = "#f116";
+    errores[0] = "Error en el usuario.  ";
   }
 });
 
@@ -30,13 +32,14 @@ email.addEventListener("input", () => {
     /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
 
   let emailOk = expRegEmail.test(dataEmail);
-  console.log(emailOk);
   if (emailOk) {
     email.style.background = "#0616";
+    errores[1] = "";
   } else if (dataEmail == "") {
     email.style.background = "none";
   } else {
     email.style.background = "#f116";
+    errores[1] = "Error en el email.  ";
   }
 });
 
@@ -45,11 +48,12 @@ password.addEventListener("input", () => {
   let expRegPass = /[A-Za-z\d$@$!%*?&]{8,15}/;
   let passOk = expRegPass.test(dataPass);
 
-  console.log(passOk);
   if (passOk) {
     password.style.background = "#0616";
+    errores[2] = "";
   } else {
     password.style.background = "#f116";
+    errores[2] = "Error en el password.  ";
   }
 });
 
@@ -58,19 +62,21 @@ telefono.addEventListener("input", (e) => {
   let expRegTel = /^9[0-9]{8}$/gm;
   let telOk = expRegTel.test(dataTel);
 
-  console.log(telOk);
   if (telOk) {
     telefono.style.background = "#0616";
+    errores[3] = "";
   } else {
-    telefono.style.background = "red";
+    telefono.style.background = "#f116";
+    errores[3] = "Error en el telefono.  ";
   }
 });
 
 button.addEventListener("click", (e) => {
   e.preventDefault();
-  if (usuario) {
-    parrafo.textContent = "todo ok";
+  console.log(errores);
+  if (!errores.every((e) => e == "")) {
+    parrafo.textContent = errores.join("");
   } else {
-    parrafo.textContent = "no ok";
+    parrafo.textContent = "Todo ok";
   }
 });
